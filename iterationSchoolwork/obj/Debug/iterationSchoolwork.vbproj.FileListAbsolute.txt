@@ -1,0 +1,12 @@
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\bin\Debug\iterationSchoolwork.exe.config
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\bin\Debug\iterationSchoolwork.exe
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\bin\Debug\iterationSchoolwork.pdb
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\bin\Debug\iterationSchoolwork.xml
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.vbprojAssemblyReference.cache
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.Resources.resources
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.vbproj.GenerateResource.cache
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.vbproj.CoreCompileInputs.cache
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.exe
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.xml
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.pdb
+D:\VS Solutions\iterationSchoolwork\iterationSchoolwork\obj\Debug\iterationSchoolwork.Form1.resources
