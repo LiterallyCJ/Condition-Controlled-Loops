@@ -45,6 +45,8 @@ Public Class Form1
     Dim Console As console
     Public money As Boolean
 
+    ' Runs when the form loads.
+    ' Define both money and Console.
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Console = New console(textConsole1)
         money = True
@@ -65,45 +67,52 @@ Public Class Form1
 
     Sub calculate()
 
-        ' Using the <console>.Clear method I created earlier.
-        Console.Clear()
+        Try
 
-        ' Saves the starting money and interest rate from the textboxes in the form.
-        Dim startingMoney As Double = Double.Parse(startingCash.Text)
-        Dim interest As Double = Double.Parse(interestRate.Text) / 100
+            ' Using the <console>.Clear method I created earlier.
+            Console.Clear()
 
-        ' Creates a new variable for current money, which is seperate from the starting money.
-        Dim currentMoney As Double = startingMoney
-        ' Creates a variable to track what year it is.
-        Dim year As Integer = 0
+            ' Saves the starting money and interest rate from the textboxes in the form.
+            Dim startingMoney As Double = Double.Parse(startingCash.Text)
+            Dim interest As Double = Double.Parse(interestRate.Text) / 100
 
-        ' If the user picked to provide a maximum amount of money.
-        If money = True Then
-            Dim moneyMax As Double = Double.Parse(inputBox1.Text)
+            ' Creates a new variable for current money, which is seperate from the starting money.
+            Dim currentMoney As Double = startingMoney
+            ' Creates a variable to track what year it is.
+            Dim year As Integer = 0
 
-            ' This bit of code keeps on running until the current money surpasses that of the max money wanted.
-            Do While currentMoney < moneyMax
+            ' If the user picked to provide a maximum amount of money.
+            If money = True Then
+                Dim moneyMax As Double = Double.Parse(inputBox1.Text)
 
-                ' This adds the current money multiplied by the interest rate to itself.
-                currentMoney += currentMoney * interest
-                ' This logs it to the console.
-                Console.Log($"Year {year}: {Integer.Parse(currentMoney).ToString()}")
+                ' This bit of code keeps on running until the current money surpasses that of the max money wanted.
+                Do While currentMoney < moneyMax
 
-                year += 1
-            Loop
+                    ' This adds the current money multiplied by the interest rate to itself.
+                    currentMoney += currentMoney * interest
 
-            ' If the user wanted to provide a maximum year.
-        Else
-            Dim yearMax As Integer = Integer.Parse(inputBox1.Text)
+                    ' This logs it to the console.
+                    Console.Log($"Year {year}: £{Convert.ToInt32(currentMoney).ToString("N0")}")
 
-            Do While year < yearMax
-                currentMoney += currentMoney * interest
-                Console.Log($"Year {year}: {Integer.Parse(currentMoney).ToString()}")
+                    year += 1
+                Loop
 
-                year += 1
-            Loop
+                ' If the user wanted to provide a maximum year.
+            Else
+                Dim yearMax As Integer = Integer.Parse(inputBox1.Text)
 
-        End If
+                Do While year < yearMax
+                    currentMoney += currentMoney * interest
+                    Console.Log($"Year {year}: £{Convert.ToInt32(currentMoney).ToString("N0")}")
+
+                    year += 1
+                Loop
+
+            End If
+
+        Catch ex As OverflowException
+            Console.Log("Amount of money has surpassed £2,147,483,647!")
+        End Try
     End Sub
 
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
