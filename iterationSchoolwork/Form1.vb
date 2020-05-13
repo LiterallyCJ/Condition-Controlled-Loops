@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.IO
+Imports System.Runtime.InteropServices
 
 Public Class Form1
 
@@ -56,13 +57,60 @@ Public Class Form1
     Private Sub YearsButton_Click(sender As Object, e As EventArgs) Handles yearsButton.Click
         money = False
         inputBox1.Size = New Size(106, 20)
-        inputBox1.Location = New Point(12, 90)
+
+        ' Makes the input box's location match the label's location.
+        inputBox1.Location = New Point(Label1.Location.X, Label1.Location.Y)
     End Sub
 
     Private Sub MoneyButton_Click(sender As Object, e As EventArgs) Handles moneyButton.Click
         money = True
         inputBox1.Size = New Size(134, 20)
-        inputBox1.Location = New Point(34, 90)
+
+        ' Moves the input box to only barely cover the label.
+        inputBox1.Location = New Point(Label2.Location.X - 90, Label2.Location.Y)
+    End Sub
+
+    Sub saveToFile()
+        Try
+            ' Gets the software's location, and finds the "saves" folder.
+            Dim savePath As String = Application.StartupPath + "\saves\"
+            ' Gets the current date and time.
+            Dim saveTemplate As String = DateTime.Now.ToString("yyyy.MM.dd HH mm ss")
+
+            ' If the directory doesn't exist, it exits the subroutine and tells the user.
+            If Not Directory.Exists(savePath) Then
+                MsgBox("You don't have a saves folder.")
+                Exit Sub
+            End If
+
+            ' Gives the directory and file extension for the file.
+            Dim saveFile = savePath + saveTemplate + ".txt"
+
+            ' Creates a new file and writes the text from the console into it.
+            Dim sw As New StreamWriter(saveFile)
+            sw.Write(textConsole1.Text)
+
+            ' Closes the StreamWriter completely.
+            sw.Close()
+            sw.Dispose()
+
+            ' Asks the user if they want to see the save folder.
+            Dim openSaveLocation As DialogResult = MessageBox.Show($"Data saved to: {saveFile} {Environment.NewLine} Open save folder?", "Save success!", MessageBoxButtons.YesNo)
+
+            ' If the user says yes, then it opens up the save folder.
+            If openSaveLocation = DialogResult.Yes Then
+                Process.Start(savePath.Substring(0, savePath.Length - 1))
+            End If
+
+            ' If there is an error with creating or writing to the file, this error occurs.
+        Catch ex As IOException
+            MsgBox("An error has occured whilst trying to save your output to a file.")
+        End Try
+    End Sub
+
+    ' Gets the number of lines on the console.
+    Sub updateLines()
+        consoleLines.Text = textConsole1.Lines.Length.ToString()
     End Sub
 
     Sub calculate()
@@ -101,6 +149,9 @@ Public Class Form1
             Else
                 Dim yearMax As Integer = Integer.Parse(inputBox1.Text)
 
+                ' Add 1 to the year, since the program also displays the amount of money on year 0.
+                yearMax += 1
+
                 Do While year < yearMax
                     currentMoney += currentMoney * interest
                     Console.Log($"Year {year}: £{Convert.ToInt32(currentMoney).ToString("N0")}")
@@ -109,6 +160,8 @@ Public Class Form1
                 Loop
 
             End If
+
+            updateLines()
 
         Catch ex As OverflowException
             Console.Log("Amount of money has surpassed £2,147,483,647!")
@@ -119,4 +172,11 @@ Public Class Form1
         calculate()
     End Sub
 
+    Private Sub ClearOutputButton_Click(sender As Object, e As EventArgs) Handles clearOutputButton.Click
+        Console.Clear()
+    End Sub
+
+    Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles saveButton.Click
+        saveToFile()
+    End Sub
 End Class
